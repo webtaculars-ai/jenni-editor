@@ -83,6 +83,10 @@ async fn ws_index(
     }, &r, stream)
 }
 
+async fn ping() -> HttpResponse {
+    HttpResponse::Ok().body("pong")
+}
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     let server = Arc::new(Mutex::new(Server::new()));
@@ -91,6 +95,7 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .app_data(web::Data::new(server.clone()))
             .route("/ws/", web::get().to(ws_index))
+            .route("/", web::get().to(ping))
     })
     .bind("127.0.0.1:8080")?
     .run()
