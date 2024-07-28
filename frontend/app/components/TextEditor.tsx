@@ -9,7 +9,8 @@ const TextEditor = () => {
 
     useEffect(() => {
         const connect = () => {
-            socket.current = new WebSocket('ws://localhost:8080/ws/');
+            const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || 'ws://localhost:8080/ws/';
+            socket.current = new WebSocket(socketUrl);
 
             socket.current.onopen = () => {
                 setConnectionStatus('Connected');
@@ -49,7 +50,7 @@ const TextEditor = () => {
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
             <header className="w-full bg-blue-600 text-white p-4 text-center text-lg">
-                Collaborative Text Editor
+                Jenni Editor 
             </header>
             <div className="w-11/12 md:w-3/4 lg:w-1/2 mt-4">
                 <textarea
@@ -57,7 +58,7 @@ const TextEditor = () => {
                     onChange={handleChange}
                     className="w-full h-96 p-4 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 resize-none"
                     placeholder="Start typing..."
-                    aria-label="Collaborative text editor"
+                    aria-label="Jenni editor"
                 />
             </div>
             <footer className="w-full bg-gray-200 text-gray-700 p-2 text-center text-sm">
